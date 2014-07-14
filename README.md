@@ -4,7 +4,7 @@ Caffeine Free Semver
 ## Anti-Features
 
 - No pre-release or build version parsing whatsoever.
-- Ranges are limited to simple combinations of version and wildcard. E.g. 1.x or v1 will work, but ^1.0.0 will not.
+- Ranges are limited to simple combinations of version and wildcard. E.g. `'1.x'` or `'v1'` will work, but `'^1.0.0'` will not.
 
 
 ## API
