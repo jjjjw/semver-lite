@@ -9,9 +9,23 @@ test('\ninvalid version numbers', function(t) {
    'NOT VALID',
    1.2,
    null,
-   'Infinity.NaN.Infinity'
+   'Infinity.NaN.Infinity',
+   'v2.1.0'
   ].forEach(function(v) {
     t.notOk(semver.valid(v), v + ' is not valid');
+  });
+  t.end();
+});
+
+test('\nvalid version numbers', function(t) {
+  ['1.0.0',
+   '2.1.9',
+   '1.0.0+alpha-build1',
+   '1.0.0-build1',
+   '1.0.0+1-build1',
+   '1.0.0-1',
+  ].forEach(function(v) {
+    t.ok(semver.valid(v), v + ' is valid');
   });
   t.end();
 });
@@ -33,12 +47,12 @@ test('\nmax satisfying', function(t) {
 
 test('\nrange syntax', function(t) {
   var versions = ['1.0.0', '1.1.0', '1.1.1', '2.0.0'];
-  ['1.1.x', 'v1', '1.x', '1'].forEach(function(range) {
+  ['1.1.x', 'v1', '1.x', '1', '1.1'].forEach(function(range) {
     var satisfying = semver.maxSatisfying(versions, range);
     t.equal(satisfying, versions[2], 'range: ' + range + ' resolves to ' + satisfying);
   });
 
-  ['x', '=2'].forEach(function(range) {
+  ['x', '=2', '2', '2.0'].forEach(function(range) {
     var satisfying = semver.maxSatisfying(versions, range);
     t.equal(satisfying, versions[3], 'range: ' + range + ' resolves to ' + satisfying);
   });

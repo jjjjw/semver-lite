@@ -38,7 +38,7 @@ function toVersion(parts) {
 
 // In leiu of supporting them, I will abide a loose check for pre-release and build versions.
 function valid (version) {
-  return /v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(\+|-)/.test(version);
+  return /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)([\+|-].*)?$/.test(version);
 }
 
 exports.valid = valid;
