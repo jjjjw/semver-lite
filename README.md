@@ -1,5 +1,8 @@
-Caffeine Free Semver
+Semver Subset
 ===
+
+## Why use?
+You're wanting to do some semver parsing and resolution, but nothing complicated. You are probably in a browser. The fantastic [node-semver](https://github.com/isaacs/node-semver) module does to much and/or you can't use polyfills. You have a very specific use case, but this module can help you!
 
 ## Anti-Features
 
