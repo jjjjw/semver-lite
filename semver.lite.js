@@ -45,13 +45,12 @@ exports.valid = valid;
 
 // TODO(jj): supporting pre-release versions would be nice, but is not necessary.
 function satisfies (versionParts, rangeParts) {
-  for (var i = versionParts.length - 1; i >= 0; i--) {
+  for (var i = 0, len = versionParts.length; i < len; i++) {
     // All * or x have been stripped away
     if (isNaN(rangeParts[i])) {
-      continue;
+      return true;
     }
-    // Silly because we are comparing strings, as we can in JS
-    if (versionParts[i] > rangeParts[i]) {
+    if (parseInt(versionParts[i], 10) > parseInt(rangeParts[i], 10)) {
       return false;
     }
   }
@@ -63,10 +62,11 @@ function maxSatisfying (versions, range) {
   return toVersion(reduce(versions, function(max, curr) {
     curr = toParts(curr);
     if (satisfies(curr, range) ) {
-      if (max && satisfies(curr, max)) {
-        return max;
+      if (!max) {
+        return curr;
+      } else if (!satisfies(curr, max)) {
+        return curr;
       }
-      return curr;
     }
     return max;
   }, null));

@@ -1,6 +1,6 @@
 {
   "name": "semver-lite",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Not the semantic version parser used by npm.",
   "main": "semver.lite.js",
   "scripts": {
