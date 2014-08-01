@@ -12,8 +12,8 @@ function reduce(arr, fn, initVal) {
 function toParts(rangeOrVersion) {
   // Throw away pre-release and build info
   var index;
-  if ((index = rangeOrVersion.indexOf('-') > -1) || (index = rangeOrVersion.indexOf('+') > -1)) {
-    rangeOrVersion = rangeOrVersion.slice(index);
+  if (((index = rangeOrVersion.indexOf('-')) > -1) || ((index = rangeOrVersion.indexOf('+')) > -1)) {
+    rangeOrVersion = rangeOrVersion.slice(0, index);
   }
   var parts = rangeOrVersion.split('.');
   // Strip all funny business. We are not parsing carets or tildes atm.
@@ -30,10 +30,6 @@ function toParts(rangeOrVersion) {
     map.push(part);
   }
   return map;
-}
-
-function toVersion(parts) {
-  return parts && parts.join('.');
 }
 
 // In leiu of supporting them, I will abide a loose check for pre-release and build versions.
@@ -58,18 +54,18 @@ function satisfies (versionParts, rangeParts) {
 }
 
 function maxSatisfying (versions, range) {
-  range = toParts(range);
-  return toVersion(reduce(versions, function(max, curr) {
-    curr = toParts(curr);
-    if (satisfies(curr, range) ) {
+  var rangeParts = toParts(range);
+  return reduce(versions, function(max, curr) {
+    var currParts = toParts(curr);
+    if (satisfies(currParts, rangeParts) ) {
       if (!max) {
         return curr;
-      } else if (!satisfies(curr, max)) {
+      } else if (!satisfies(currParts, toParts(max))) {
         return curr;
       }
     }
     return max;
-  }, null));
+  }, null);
 }
 
 exports.maxSatisfying = maxSatisfying;
