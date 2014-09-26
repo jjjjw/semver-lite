@@ -39,6 +39,12 @@ function valid (version) {
 
 exports.valid = valid;
 
+function validRange (range) {
+  return /^.?\d+/.test(range);
+}
+
+exports.validRange = validRange;
+
 // TODO(jj): supporting pre-release versions would be nice, but is not necessary.
 function satisfies (versionParts, rangeParts) {
   for (var i = 0, len = versionParts.length; i < len; i++) {
@@ -54,6 +60,9 @@ function satisfies (versionParts, rangeParts) {
 }
 
 function maxSatisfying (versions, range) {
+  if (!validRange(range)) {
+    return null;
+  }
   var rangeParts = toParts(range);
   return reduce(versions, function(max, curr) {
     var currParts = toParts(curr);

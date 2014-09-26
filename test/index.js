@@ -57,9 +57,19 @@ test('\nrange syntax', function(t) {
     t.equal(satisfying, versions[2], 'range: ' + range + ' resolves to ' + satisfying);
   });
 
-  ['x', '=2', '2', '2.0'].forEach(function(range) {
+  ['x2', '=2', '2', '2.0'].forEach(function(range) {
     var satisfying = semver.maxSatisfying(versions, range);
     t.equal(satisfying, versions[3], 'range: ' + range + ' resolves to ' + satisfying);
   });
+  t.end();
+});
+
+test('\ninvalid range syntax', function(t) {
+  var versions = ['1.0.0', '1.1.0', '1.1.1', '2.0.0'];
+  ['prod', 'x'].forEach(function(range) {
+    var satisfying = semver.maxSatisfying(versions, range);
+    t.notOk(satisfying, 'range: ' + range + ' should be null');
+  });
+
   t.end();
 });
